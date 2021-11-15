@@ -1,0 +1,26 @@
+/* reset css */
+@import './reset';
+
+/* basic settings */
+@import './themes';
+@import './basic';
+
+
+
+/*general large area settings - mobile */
+@import './mobileMain';
+
+/* header - mobile first */
+@import './header';
+
+/* stepper - mobile first */
+@import './stepper';
+
+/* main form - mobile first */
+@import './form';
+
+/* checkout section - mobile first */
+@import './checkout';
+
+/* media quearies - all desktop styles*/
+@import './desktopStyles';

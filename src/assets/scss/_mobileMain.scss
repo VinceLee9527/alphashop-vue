@@ -1,0 +1,23 @@
+#body-container {
+  height: 100%;
+  background-color: var(--background-color);
+  color: var(--body-text-color);
+  font-family: $main-font;
+}
+
+#main-app {
+  width: 95%;
+  margin: 0 auto;
+}
+
+#main-content {
+  margin-top: 30px;
+}
+
+.main-title {
+  @extend %title-style;
+}
+
+footer {
+  display: none;
+}

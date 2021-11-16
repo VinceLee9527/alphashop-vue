@@ -1,7 +1,7 @@
 <template>
-  <div class="part-container d-none">
+  <div class="part-container">
     <div class="part">
-      <h2 class="form-header title-grid">運送方式</h2>
+      <h2 class="form-header">運送方式</h2>
       <div class="form-row part-shipping">
         <div class="shipping-method">
           <input

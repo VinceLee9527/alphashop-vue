@@ -1,7 +1,7 @@
 <template>
   <div class="part-container">
     <div class="part">
-      <h2 class="form-header title-grid">寄送地址</h2>
+      <h2 class="form-header">寄送地址</h2>
       <div class="form-row part-title">
         <label>稱謂</label>
         <div class="select-wrapper">

@@ -1,7 +1,7 @@
 <template>
-  <div class="part-container d-none">
+  <div class="part-container">
     <div class="part">
-      <h2 class="form-header title-grid">付款資訊</h2>
+      <h2 class="form-header">付款資訊</h2>
       <div class="form-row part-cardholder-name">
         <label for="">持卡人姓名</label
         ><input

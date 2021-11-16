@@ -53,22 +53,41 @@
             <form id="a-form" class="d-flex flex-column">
               <div class="form-content">
                 <!--form - delivery info-->
-                <FormOne />
+                <FormOne v-show="CurrentStep === 1" />
                 <!--form - shipping address-->
-                <FormTwo />
+                <FormTwo v-show="CurrentStep === 2" />
                 <!--form - payment method-->
-                <FormThree />
+                <FormThree v-show="CurrentStep === 3" />
               </div>
             </form>
           </div>
         </div>
       </div>
       <!--checkout section-->
-      <CheckoutCart />
+      <CheckoutCart :initial-items="items" />
       <!--next/prev button-->
       <div id="btn-control" class="control-panel d-flex">
-        <button class="btn btn-outline d-none">上一步</button>
-        <button class="btn btn-primary">下一步</button>
+        <button
+          class="btn btn-outline"
+          v-show="CurrentStep > 1"
+          @click.stop.prevent="handlePrevStep"
+        >
+          上一步
+        </button>
+        <button
+          class="btn btn-primary"
+          v-if="CurrentStep <= 2"
+          @click.stop.prevent="handleNextStep"
+        >
+          下一步
+        </button>
+        <button
+          class="btn btn-primary"
+          v-else
+          @click.stop.prevent="handleNextStep"
+        >
+          確認下單
+        </button>
       </div>
     </main>
   </div>
@@ -80,13 +99,60 @@ import FormTwo from "./../components/FormTwo";
 import FormThree from "./../components/FormThree";
 import CheckoutCart from "./../components/CheckoutCart";
 
+const dummyData = {
+  items: [
+    {
+      id: 1,
+      name: "破壞補丁修身牛仔褲",
+      quantity: 1,
+      price: 3999,
+      image: "https://i.imgur.com/sD3wrPt.png",
+    },
+    {
+      id: 2,
+      name: "刷色直筒牛仔褲",
+      quantity: 1,
+      price: 1299,
+      image: "https://i.imgur.com/Ib2KPO3.png",
+    },
+  ],
+};
+
 export default {
   name: "checkout",
+  data() {
+    return {
+      CurrentStep: 1,
+      items: [],
+    };
+  },
   components: {
     FormOne,
     FormTwo,
     FormThree,
     CheckoutCart,
+  },
+  created() {
+    this.fetchItems();
+  },
+  methods: {
+    fetchItems() {
+      this.items = dummyData.items;
+    },
+    handleNextStep() {
+      if (this.CurrentStep <= 2) {
+        this.CurrentStep = this.CurrentStep + 1;
+      } else {
+        return;
+      }
+    },
+    handlePrevStep() {
+      if (this.CurrentStep >= 2) {
+        this.CurrentStep = this.CurrentStep - 1;
+      } else {
+        return;
+      }
+    },
   },
 };
 </script>

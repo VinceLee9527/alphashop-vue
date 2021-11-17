@@ -9,7 +9,6 @@ const routes = [
       path: '/',
       name: 'root',
       redirect: '/checkout/1',
-      component: () => import('../views/Checkout.vue'),
     },
     {
       path: '/checkout',

@@ -67,12 +67,12 @@
 
 <script>
 export default {
-  // props: {
-  //   initialDeliveryCost: {
-  //     type: Number,
-  //     required: true,
-  //   },
-  // },
+  props: {
+    initialDeliveryCost: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       deliveryCost: 0,
@@ -89,8 +89,6 @@ export default {
     },
     deliveryButtonClick() {
       this.$emit("delivery-change", this.deliveryCost);
-      console.log(this.deliveryCost);
-      localStorage.setItem("deliveryCost", JSON.stringify(this.deliveryCost));
     },
   },
   watch: {
@@ -102,9 +100,6 @@ export default {
       immediate: true,
       deep: true,
     },
-  },
-  created() {
-    this.deliveryCost = JSON.parse(localStorage.getItem("deliveryCost")) || [];
   },
 };
 </script>

@@ -47,6 +47,7 @@
       "left-content checkout-panel"
       "control-panel checkout-panel";
     margin-top: -30px;
+    position: relative;
     .left-content {
       flex: 1;
       margin-right: 134px;
@@ -141,10 +142,12 @@
 
   .control-panel {
     justify-content: flex-end;
+    width: 100%;
     margin-right: 100px;
-    margin-top: -70px;
     .btn-outline {
       flex: 1;
+      display: flex;
+      justify-content: left;
     }
     .btn-primary {
       flex: unset;

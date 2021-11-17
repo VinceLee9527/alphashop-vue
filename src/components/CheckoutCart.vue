@@ -40,7 +40,10 @@
       </div>
       <div class="delivery-wrapper d-flex justify-content-between">
         <p class="delivery-title">運費</p>
-        <p class="delivery-fee">免費</p>
+        <p class="delivery-fee" v-show="deliveryCost === 0">免費</p>
+        <p class="delivery-fee" v-show="deliveryCost > 0">
+          {{ deliveryCost | toCurrency }}
+        </p>
       </div>
       <div class="total-wrapper d-flex justify-content-between">
         <p class="total-title">小計</p>
@@ -57,6 +60,10 @@ export default {
       type: Array,
       required: true,
     },
+    deliveryCost: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -65,25 +72,37 @@ export default {
     };
   },
   methods: {
+    //"+" @click, 增加item的購買數量
     addQuantity(item) {
       item.quantity += 1;
     },
+    //"-" @click, 減少item的購買數量
     minusQuantity(item) {
       if (item.quantity >= 2) {
         item.quantity -= 1;
       }
     },
+    //for迴圈計算items的總價錢，計算完emit到父層做結帳modal
     totleCostCalc() {
       this.totleCost = 0;
       this.items.map((item) => {
-        const itemTotal = item.quantity * item.price;
-        this.totleCost += itemTotal;
+        const itemCost = Number(item.quantity * item.price);
+        this.totleCost += itemCost;
       });
+      this.totleCost += this.deliveryCost;
       this.$emit("new-totle-Cost", { newtotleCost: this.totleCost });
     },
   },
   watch: {
+    //用watch讓每次user點+/-都會觸發totleCostCalc(), 用immediate讓網站初始化完成後，就先觸發
     items: {
+      handler: function () {
+        this.totleCostCalc();
+      },
+      immediate: true,
+      deep: true,
+    },
+    deliveryCost: {
       handler: function () {
         this.totleCostCalc();
       },
@@ -92,6 +111,7 @@ export default {
     },
   },
   filters: {
+    //filter渲染數字，呈現currency跟,
     toCurrency(val) {
       let formatter = new Intl.NumberFormat("en-US", {
         style: "currency",

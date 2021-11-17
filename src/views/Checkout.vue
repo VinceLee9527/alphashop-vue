@@ -52,51 +52,22 @@
           <div class="container form-container">
             <form id="a-form" class="d-flex flex-column">
               <div class="form-content">
-                <!--form - delivery info-->
-                <FormOne v-show="CurrentStep === 1" />
-                <!--form - shipping address-->
-                <FormTwo v-show="CurrentStep === 2" />
-                <!--form - payment method-->
-                <FormThree v-show="CurrentStep === 3" />
+                <router-view
+                  :initial-delivery-cost="deliveryCost"
+                  @delivery-change="deliveryChange"
+                />
               </div>
             </form>
           </div>
         </div>
       </div>
       <!--checkout section-->
-      <CheckoutCart :initial-items="items" />
-      <!--next/prev button-->
-      <div id="btn-control" class="control-panel d-flex">
-        <button
-          class="btn btn-outline"
-          v-show="CurrentStep > 1"
-          @click.stop.prevent="handlePrevStep"
-        >
-          上一步
-        </button>
-        <button
-          class="btn btn-primary"
-          v-if="CurrentStep <= 2"
-          @click.stop.prevent="handleNextStep"
-        >
-          下一步
-        </button>
-        <button
-          class="btn btn-primary"
-          v-else
-          @click.stop.prevent="handleNextStep"
-        >
-          確認下單
-        </button>
-      </div>
+      <CheckoutCart :initial-items="items" :delivery-cost="deliveryCost" />
     </main>
   </div>
 </template>
 
 <script>
-import FormOne from "./../components/FormOne";
-import FormTwo from "./../components/FormTwo";
-import FormThree from "./../components/FormThree";
 import CheckoutCart from "./../components/CheckoutCart";
 
 const dummyData = {
@@ -122,14 +93,13 @@ export default {
   name: "checkout",
   data() {
     return {
-      CurrentStep: 1,
+      //currentstep使用router來控制上下頁
+      CurrentStep: "address",
       items: [],
+      deliveryCost: 0,
     };
   },
   components: {
-    FormOne,
-    FormTwo,
-    FormThree,
     CheckoutCart,
   },
   created() {
@@ -139,20 +109,12 @@ export default {
     fetchItems() {
       this.items = dummyData.items;
     },
-    handleNextStep() {
-      if (this.CurrentStep <= 2) {
-        this.CurrentStep = this.CurrentStep + 1;
-      } else {
-        return;
-      }
+    deliveryChange(deliveryCost) {
+      this.deliveryCost = Number(deliveryCost);
     },
-    handlePrevStep() {
-      if (this.CurrentStep >= 2) {
-        this.CurrentStep = this.CurrentStep - 1;
-      } else {
-        return;
-      }
-    },
+    // saveDeliverStorage() {
+
+    // }
   },
 };
 </script>

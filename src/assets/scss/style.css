@@ -82,6 +82,10 @@ input:invalid {
   background: transparent;
 }
 
+#app {
+  text-align: left;
+}
+
 /* basic settings */
 :root {
   --background-color: #fff;
@@ -699,7 +703,7 @@ form input, form select {
   padding: 0.5em;
 }
 
-.main-title, .part .form-header {
+.part .form-header {
   font-size: 1.5rem;
   font-weight: 700;
   padding: 0.2em 0;
@@ -845,6 +849,10 @@ html {
 
 #main-content {
   margin-top: 30px;
+}
+
+.main-title {
+  font-size: 2rem;
 }
 
 footer {
@@ -1054,6 +1062,7 @@ footer {
 .part {
   display: -ms-grid;
   display: grid;
+  height: 400px;
   -ms-grid-columns: (1fr)[6];
       grid-template-columns: repeat(6, 1fr);
 }
@@ -1361,6 +1370,7 @@ form select:invalid {
         grid-template-columns: 2fr 1fr;
         grid-template-areas: "left-content checkout-panel" "control-panel checkout-panel";
     margin-top: -30px;
+    position: relative;
   }
   #main-content .left-content {
     -webkit-box-flex: 1;
@@ -1468,13 +1478,19 @@ form select:invalid {
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
+    width: 100%;
     margin-right: 100px;
-    margin-top: -70px;
   }
   .control-panel .btn-outline {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: left;
+        -ms-flex-pack: left;
+            justify-content: left;
   }
   .control-panel .btn-primary {
     -webkit-box-flex: unset;

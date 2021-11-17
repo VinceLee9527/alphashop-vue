@@ -1,5 +1,6 @@
 .part {
   display: grid;
+  height: 400px;
   grid-template-columns: repeat(6, 1fr);
   .form-header {
     @extend %title-style;

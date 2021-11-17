@@ -8,12 +8,31 @@ const routes = [
   { 
       path: '/',
       name: 'root',
-      redirect: '/checkout'
+      redirect: '/checkout/1',
+      component: () => import('../views/Checkout.vue'),
     },
     {
-      path: '/Checkout',
-      name: 'Checkout',
-      component: Checkout
+      path: '/checkout',
+      name: 'checkout',
+      component: Checkout,
+      children: [
+        //nested route共享checkout結構
+      {
+        path: '1',
+        name: 'address',
+        component: () => import('../components/FormOne.vue')
+      },
+      {
+        path: '2',
+        name: 'delivery',
+        component:()=>import('../components/FormTwo.vue')
+      },
+      {
+        path: '3',
+        name: 'payment',
+        component: () => import('../components/FormThree.vue')
+      },
+    ]
     },
 ]
 

@@ -1,10 +1,7 @@
 <template>
   <div id="stepper-control">
     <div class="container stepper-container mt-4 d-flex">
-      <div
-        class="step active"
-        :class="{ checked: currentStep === 'delivery' || 'payment' }"
-      >
+      <div class="step active" :class="{ checked: currentStep !== 'address' }">
         <div
           class="
             circle-container

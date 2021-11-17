@@ -24,13 +24,13 @@
             <div class="product-quantity">
               <span
                 class="product-quantity-minus cursor-pointer"
-                @click.stop.prevent="minusQuantity(item)"
+                @click.stop.prevent="minusQuantity(item.id)"
                 >-</span
               >
               <span class="product-quantity-num">{{ item.quantity }}</span>
               <span
                 class="product-quantity-plus cursor-pointer"
-                @click.stop.prevent="addQuantity(item)"
+                @click.stop.prevent="addQuantity(item.id)"
                 >+</span
               >
             </div>
@@ -54,12 +54,29 @@
 </template>
 
 <script>
+const STORAGE_ITEM = "alphashop-item";
+
+const dummyData = {
+  items: [
+    {
+      id: 1,
+      name: "破壞補丁修身牛仔褲",
+      quantity: 1,
+      price: 3999,
+      image: "https://i.imgur.com/sD3wrPt.png",
+    },
+    {
+      id: 2,
+      name: "刷色直筒牛仔褲",
+      quantity: 1,
+      price: 1299,
+      image: "https://i.imgur.com/Ib2KPO3.png",
+    },
+  ],
+};
+
 export default {
   props: {
-    initialItems: {
-      type: Array,
-      required: true,
-    },
     deliveryCost: {
       type: Number,
       required: true,
@@ -67,30 +84,42 @@ export default {
   },
   data() {
     return {
-      items: this.initialItems,
+      items: [],
       totleCost: 0,
     };
   },
+  created() {
+    this.fetchItems();
+  },
   methods: {
+    fetchItems() {
+      this.items = dummyData.items;
+    },
     //"+" @click, 增加item的購買數量
-    addQuantity(item) {
+    addQuantity(id) {
+      const item = this.items.find((item) => id === item.id);
       item.quantity += 1;
     },
     //"-" @click, 減少item的購買數量
-    minusQuantity(item) {
+    minusQuantity(id) {
+      const item = this.items.find((item) => id === item.id);
       if (item.quantity >= 2) {
         item.quantity -= 1;
       }
     },
-    //for迴圈計算items的總價錢，計算完emit到父層做結帳modal
+    //計算items的總價錢
     totleCostCalc() {
       this.totleCost = 0;
-      this.items.map((item) => {
-        const itemCost = Number(item.quantity * item.price);
-        this.totleCost += itemCost;
-      });
+      for (let i in this.items) {
+        this.totleCost += Number(this.items[i].quantity * this.items[i].price);
+      }
       this.totleCost += this.deliveryCost;
-      this.$emit("new-totle-Cost", { newtotleCost: this.totleCost });
+    },
+    saveStorage() {
+      localStorage.setItem(STORAGE_ITEM, JSON.stringify(this.items));
+    },
+    createStorageData() {
+      this.items = JSON.parse(localStorage.getItem(STORAGE_ITEM));
     },
   },
   watch: {
@@ -98,6 +127,7 @@ export default {
     items: {
       handler: function () {
         this.totleCostCalc();
+        this.saveStorage();
       },
       immediate: true,
       deep: true,

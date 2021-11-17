@@ -75,16 +75,14 @@ export default {
   },
   data() {
     return {
-      deliveryCost: 0,
+      deliveryCost: this.initialDeliveryCost,
     };
   },
   methods: {
     nextStep() {
-      this.$emit("step-after-submit");
       this.$router.push({ name: "payment" });
     },
     prevStep() {
-      this.$emit("step-after-submit");
       this.$router.push({ name: "address" });
     },
     deliveryButtonClick() {
@@ -92,7 +90,6 @@ export default {
     },
   },
   watch: {
-    //用watch讓每次user點+/-都會觸發totleCostCalc(), 用immediate讓網站初始化完成後，就先觸發
     deliveryCost: {
       handler: function () {
         this.deliveryButtonClick();

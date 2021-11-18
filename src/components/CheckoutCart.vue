@@ -90,6 +90,13 @@ export default {
   },
   created() {
     this.fetchItems();
+    console.log("created");
+  },
+  beforeMount() {
+    if (localStorage.getItem(STORAGE_ITEM) !== null) {
+      this.createStorageData();
+      console.log("rendered");
+    }
   },
   methods: {
     fetchItems() {
@@ -123,13 +130,14 @@ export default {
     },
   },
   watch: {
-    //用watch讓每次user點+/-都會觸發totleCostCalc(), 用immediate讓網站初始化完成後，就先觸發
+    //用watch讓每次user點+/-都會觸發totleCostCalc()
     items: {
       handler: function () {
         this.totleCostCalc();
         this.saveStorage();
+        console.log("watched");
       },
-      immediate: true,
+      // immediate: true,
       deep: true,
     },
     deliveryCost: {

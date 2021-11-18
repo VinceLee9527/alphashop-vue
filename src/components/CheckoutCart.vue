@@ -90,12 +90,10 @@ export default {
   },
   created() {
     this.fetchItems();
-    console.log("created");
   },
-  beforeMount() {
+  mounted() {
     if (localStorage.getItem(STORAGE_ITEM) !== null) {
-      this.createStorageData();
-      console.log("rendered");
+      this.parseStorageData();
     }
   },
   methods: {
@@ -125,7 +123,7 @@ export default {
     saveStorage() {
       localStorage.setItem(STORAGE_ITEM, JSON.stringify(this.items));
     },
-    createStorageData() {
+    parseStorageData() {
       this.items = JSON.parse(localStorage.getItem(STORAGE_ITEM));
     },
   },
